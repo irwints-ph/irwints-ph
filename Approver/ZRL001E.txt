@@ -1,0 +1,1229 @@
+*&---------------------------------------------------------------------*
+*& Report  ZRL001E
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZRL001E.
+
+*-----------------------------------------------------------------------
+*  TYPES
+*-----------------------------------------------------------------------
+TYPE-POOLS: truxs.
+types:
+  begin of gty_RULTB,
+    RLNAM like HRS1000-OBJID,
+    RLDSC like HRS1000-MC_STEXT,
+  end of gty_RULTB,
+  begin of gty_RULTD,
+    RLNMI(2),
+    RLDSC like HRS1000-MC_STEXT,
+  end of gty_RULTD,
+
+  begin of gty_PFACT,
+    RSPNM      like HRV1218-OBJID,
+    ELMNT      like HRV1218-ELEMENT,
+    EXPLW      like HRV1218-EXPR_LOW,
+    EXPHG      like HRV1218-EXPR_HIGH,
+    TYPE       like HRV1218-TYPE,
+    FLENG      like HRV1218-FLENG,
+    REFSTRUCT  like HRV1218-REFSTRUCT,
+    REFFIELD   like HRV1218-REFFIELD,
+  end of gty_PFACT,
+  begin of gty_pfacf,
+    RSPNM like HRV1218-OBJID,
+    ELMNT like HRV1218-ELEMENT,
+    UNDEX(3) type n,
+    EXPLW like HRV1218-EXPR_LOW,
+    EXPHG like HRV1218-EXPR_HIGH,
+    RLNAM(2), " TYPE CHAR8,
+  end of gty_pfacf,
+
+  begin of gty_cl24n,
+    OBJEK like AUSP-OBJEK,  "RelCode Rel Group. RSPNM
+    ELMNT like CABN-ATNAM,
+    ATZHL like AUSP-ATZHL,  "Index
+    ATWRT like AUSP-ATWRT,  "EXPLW
+    ATFLV like AUSP-ATFLV,
+    ATAWE like AUSP-ATAWE,
+    ATFLB like AUSP-ATFLB,
+    ATAW1 like AUSP-ATAW1,  "RLNAM
+  end of gty_cl24n,
+
+  begin of gty_cl24D,
+    OBJEK like AUSP-OBJEK,  "RSPNM
+    ELMNT like CABN-ATNAM,  "ELMNT
+    ATZHL like AUSP-ATZHL,  "UNDEX
+    ATWRT like AUSP-ATWRT,  "EXPLW
+    "EXPHG like AUSP-ATWRT,
+    ATFLV like AUSP-ATFLV, "type maxbt, "like AUSP-ATFLV, "EXNLW
+    ATFLB like AUSP-ATFLB, "type maxbt, "like AUSP-ATFLB, "EXNHG
+    RLNAM(2),
+    "RLNAM like HRV1218-OBJID,
+    "-ATAWE like AUSP-ATAWE,
+    "-ATAW1 like AUSP-ATAW1,
+  end of gty_cl24D,
+*ATFLV
+*ATAWE
+*ATFLB
+*ATAW1
+*ATCOD
+*ATTLV
+*ATTLB
+  begin of gty_RSPTB,
+    RSPNM like HRP1240-OBJID,
+    RSPDC like HRP1000-MC_STEXT,
+    RLNAM like HRP1240-EXT_OBJID,
+    RSPST like HRP1000-MC_SHORT,
+    PRITY like HRP1240-REL_PRIOX,
+  end of gty_RSPTB,
+  begin of gty_RSPTB_D,
+    RSPNM like HRP1240-OBJID,
+    RSPDC like HRP1000-MC_STEXT,
+    RLNAM(2),
+    RSPST like HRP1000-MC_SHORT,
+    PRITY like HRP1240-REL_PRIOX,
+  end of gty_RSPTB_D,
+
+  begin of gty_urtab,
+    UNAME like USR21-BNAME,
+    UNDEX(3) type n,
+    RSPNM like HRV1218-OBJID,
+    BEGDA(10),
+    ENDDA(10),
+  end of gty_urtab,
+
+  begin of gty_xeusr,
+    USRID(05) type n,
+    UNAME like USR21-BNAME,
+    EMAIL(150),
+    FNAME(100),
+    LNAME(100),
+  end of gty_xeusr,
+
+  begin of gty_USRSP,
+    UNAME like USR21-BNAME,
+    RSPNM like HRV1218-OBJID,
+  end of gty_USRSP,
+  begin of gty_OMRSP,
+    RLNAM(02),
+    OMNAM like HRV1218-OBJID,
+    RSPNM like HRV1218-OBJID,
+  end of gty_OMRSP,
+  begin of gty_OMT00,
+    OMNAM     like HRP1000-OBJID,
+    STEXT     like HRP1000-STEXT,
+    ORGCD     like HRP1001-SOBID,
+*    MC_SHORT  like HRP1000-MC_SHORT,
+*    MC_STEXT  like HRP1000-MC_STEXT,
+*    MC_SEARK  like HRP1000-MC_SEARK,
+  end of gty_OMT00,
+  begin of gty_OMT01,
+    OMNAM like HRV1218-OBJID,
+    UNAME like USR21-BNAME,
+    BEGDA(10),
+    ENDDA(10),
+  end of gty_OMT01,
+
+  begin of gty_ELMTD,
+    ETYPE TYPE CHAR2,
+    RLNAM(2)," TYPE CHAR8,
+    ELMNT like CABN-ATNAM,
+    DSCRP like CABN-ATNAM,
+    DLTYP(1),
+    "DTYPE like CABN-ATFOR,
+    ANZST(03) type n, "like HRP1240-REL_PRIOX, "CABN-ANZST, "Length
+    REFTB like CABN-ATTAB,
+    REFLD like CABN-ATFEL,
+  end of gty_ELMTD,
+
+  begin of gty_ELMTB,
+    ELMNT like CABN-ATNAM,
+    DSCRP like CABN-ATNAM,
+    DTYPE like CABN-ATFOR,
+    ANZST like CABN-ANZST,
+    REFTB like CABN-ATTAB,
+    REFLD like CABN-ATFEL,
+  end of gty_ELMTB.
+
+  data:
+     git_RULTB type STANDARD TABLE OF gty_RULTB,
+     gwa_RULTB type gty_RULTB.
+  data:
+     git_RSPTB type STANDARD TABLE OF gty_RSPTB,
+     gwa_RSPTB type gty_RSPTB.
+
+  data:
+     git_PFACT type STANDARD TABLE OF gty_PFACT,
+     gwa_PFACT type gty_PFACT.
+  data:
+     git_ELMTB type STANDARD TABLE OF gty_ELMTB,
+     gwa_ELMTB type gty_ELMTB.
+  data:
+     git_USRSP type STANDARD TABLE OF gty_USRSP,
+     gwa_USRSP type gty_USRSP.
+  data:
+     git_OMRSP type STANDARD TABLE OF gty_OMRSP,
+     gwa_OMRSP type gty_OMRSP.
+  data:
+     git_OMT00 type STANDARD TABLE OF gty_OMT00,
+     gwa_OMT00 type gty_OMT00.
+  data:
+     git_OMT01 type STANDARD TABLE OF gty_OMT01,
+     gwa_OMT01 type gty_OMT01.
+
+
+  data:
+     git_CL24N type STANDARD TABLE OF gty_CL24N,
+     gwa_CL24N type gty_CL24N.
+  data : begin of git_OMTBL occurs 0.
+           data rspnm(8).
+           include structure objec.
+  data : end of git_OMTBL.
+  data gd_rlnam(2).
+
+  DATA: git_DataT  TYPE truxs_t_text_data.
+  data gd_dirnm type string.
+  ranges:
+    gr_objid for HRP1000-OBJID OCCURS 0.
+
+*-----------------------------------------------------------------------
+*  SELECT OPTIONS / PARAMETERS   - SELECTION SCREEN DISPAY
+*-----------------------------------------------------------------------
+selection-screen begin of block box1 with frame title txtblk01.
+*  parameters: up_rulen type HRS1000-OBJID DEFAULT '99900032'.
+  parameters: up_dpath like rlgrap-filename DEFAULT 'D:\Docs\ABS\MRNet\Data\'.
+  parameters: up_CLINT like CABN-CLINT DEFAULT '000000005'. "In DEV310 this should be 000000001
+selection-screen end of block box1.
+
+at selection-screen on value-request for up_dpath.
+    IF NOT up_dpath IS INITIAL.
+      gd_DIRNM = up_dpath.
+    ELSE.
+      gd_DIRNM = 'C:\'.
+    ENDIF.
+    CALL METHOD cl_gui_frontend_services=>directory_browse
+        EXPORTING window_title = 'File Directory'
+                        initial_folder = gd_DIRNM
+        CHANGING selected_folder = gd_DIRNM.
+
+    CALL METHOD cl_gui_cfw=>flush.
+    IF NOT gd_DIRNM IS INITIAL.
+      concatenate gd_DIRNM '\' into up_dpath.
+    ENDIF.
+
+
+*-----------------------------------------------------------------------
+*  START OF SELECTION EVENT - MAIN PROCESSING BLOCK
+*-----------------------------------------------------------------------
+start-of-selection.
+  perform fl_get_dataxx.
+
+
+*&---------------------------------------------------------------------*
+*&      Form  f_get_data
+*&---------------------------------------------------------------------*
+form fl_get_dataxx.
+  DATA:
+    lwa_pfacf TYPE gty_pfacf,
+    lit_pfacf TYPE TABLE OF gty_pfacf.
+  DATA:
+    lwa_urtab TYPE gty_urtab,
+    lit_urtab TYPE TABLE OF gty_urtab.
+
+  DATA:
+    lwa_xeusr TYPE gty_xeusr,
+    lit_xeusr TYPE TABLE OF gty_xeusr.
+  DATA:
+    lwa_T16FD type T16FD,
+    lit_T16FD type TABLE OF T16FD,
+    lit_T16FT type TABLE OF T16FT,
+    lit_T16FC type TABLE OF T16FC.
+*    lit_T16FS type TABLE OF T16FS.
+
+  DATA:
+    BEGIN OF lit_t16fg OCCURS 0,
+      RELGP	LIKE T16FT-FRGGR,
+      RELST LIKE T16FT-FRGSX,
+      DSCRP LIKE T16FT-FRGXT,
+      RLNAM(2),
+    END OF lit_t16fg,
+
+    BEGIN OF lit_T16FH OCCURS 0,
+      FRGGR LIKE T16FH-FRGGR,
+      FRGGT LIKE T16FH-FRGGT,
+    END OF lit_T16FH,
+
+    BEGIN OF lit_T16FS OCCURS 0,
+      FRGGR LIKE T16FS-FRGGR,
+      FRGSX LIKE T16FS-FRGSX,
+      APR01 LIKE T16FS-FRGC1,
+      APR02 LIKE T16FS-FRGC1,
+      APR03 LIKE T16FS-FRGC1,
+      APR04 LIKE T16FS-FRGC1,
+      APR05 LIKE T16FS-FRGC1,
+      APR06 LIKE T16FS-FRGC1,
+      APR07 LIKE T16FS-FRGC1,
+      APR08 LIKE T16FS-FRGC1,
+      APR09 LIKE T16FS-FRGC1,
+      APR10 LIKE T16FS-FRGC1,
+    END OF lit_T16FS,
+
+    BEGIN OF lit_t16DD OCCURS 0,
+      FRGGR	LIKE T16FD-FRGGR,
+      FRGCO LIKE T16FD-FRGCO,
+      FRGCT LIKE T16FD-FRGCT,
+    END OF lit_t16DD.
+
+  data:
+     lit_ELMTB type STANDARD TABLE OF gty_ELMTB.
+  data:
+     git_ELMTD type STANDARD TABLE OF gty_ELMTD WITH KEY ETYPE RLNAM ELMNT,
+     gwa_ELMTD type gty_ELMTD.
+  data:
+     lwa_RSPTB_D type gty_RSPTB_D,
+     lit_RSPTB_D type STANDARD TABLE OF gty_RSPTB_D.
+  data:
+     lit_cl24D type STANDARD TABLE OF gty_cl24D,
+     lwa_cl24D type gty_cl24D.
+  data:
+    ld_fname type string.
+  ranges:
+    lr_rulen for HRS1000-OBJID OCCURS 0.
+  data:
+     lit_RULTD type STANDARD TABLE OF gty_RULTD,
+     lwa_RULTD type gty_RULTD.
+
+  data:
+     lit_H1000 type STANDARD TABLE OF HRP1000,
+     lit_H1001 type STANDARD TABLE OF HRP1001.
+
+*  ld_rlnam = 'PR'.
+*      select a~FRGGR a~FRGSX a~FRGXT
+*      INTO TABLE lit_t16fg
+*      from T16FT as a INNER JOIN T16FG as b
+*        on a~FRGGR = b~FRGGR
+*      where b~FRGOT = 1.
+*      loop at lit_t16fg.
+*        lit_t16fg-RLNAM = ld_rlnam.
+*        modify lit_t16fg TRANSPORTING RLNAM.
+*      endloop.
+*
+*  exit.
+
+  lr_rulen-sign = 'I'.
+  lr_rulen-option = 'EQ'.
+  lr_rulen-low = '99900032'.
+  APPEND lr_rulen.
+  lr_rulen-low = '99900033'.
+  APPEND lr_rulen.
+
+  "Users only. other should be cleared inside the loop.
+  REFRESH:
+    git_OMRSP,
+    git_ELMTD,
+    git_USRSP.
+  CLEAR:
+    gd_rlnam,
+    git_OMRSP,
+    git_ELMTD,
+    git_USRSP.
+
+  SELECT OBJID MC_STEXT
+  INTO TABLE git_RULTB
+  FROM HRS1000
+  WHERE OTYPE = 'AC'
+    AND OBJID IN lr_rulen. "up_rulen.
+
+  LOOP AT git_RULTB INTO gwa_RULTB.
+    IF gwa_RULTB-RLNAM = '99900032'. "PR Rule
+      gd_rlnam = 'PR'.
+      lwa_RULTD-RLDSC = 'PR Rules'.
+
+      SELECT b~ATNAM b~ATNAM b~ATFOR b~ANZST b~ATTAB b~ATFEL
+      INTO TABLE lit_ELMTB
+      FROM KSML as a
+        INNER JOIN CABN as b ON a~IMERK = b~ATINN
+      WHERE a~CLINT = up_CLINT
+        AND a~KLART = '032'.
+      LOOP AT lit_ELMTB INTO gwa_ELMTB.
+        MOVE-CORRESPONDING gwa_ELMTB to gwa_ELMTD.
+        gwa_ELMTD-ETYPE = 'CL'.
+        IF gwa_ELMTB-DTYPE = 'CHAR'.
+          gwa_ELMTD-DLTYP = 'C'.
+        ELSEIF gwa_ELMTB-DTYPE = 'CURR'.
+          gwa_ELMTD-DLTYP = 'N'.
+        ENDIF.
+        gwa_ELMTD-DSCRP = gwa_ELMTD-ELMNT.
+        gwa_ELMTD-RLNAM = gd_rlnam. "gwa_RULTB-RLNAM.
+        APPEND gwa_ELMTD to git_ELMTD.
+      ENDLOOP.
+
+      SELECT a~OBJEK b~ATNAM a~ATZHL a~ATWRT
+             a~ATFLV a~ATAWE a~ATFLB a~ATAW1
+      INTO TABLE git_cl24n
+      FROM AUSP as a
+        INNER JOIN CABN as b ON a~ATINN = b~ATINN
+      WHERE a~KLART = '032'.
+      LOOP AT git_cl24n INTO gwa_cl24n.
+        MOVE-CORRESPONDING gwa_cl24n to lwa_cl24D.
+        "lwa_cl24D-OBJEK = gwa_cl24n-OBJEK+4(4).
+        lwa_cl24D-RLNAM = gd_rlnam. "gwa_RULTB-RLNAM.
+        "lwa_cl24D-EXPHG = lwa_cl24D-ATWRT.
+        if lwa_cl24D-ATFLV is INITIAL.
+          lwa_cl24D-ATFLV = 0.
+        ENDIF.
+        if lwa_cl24D-ATFLB is INITIAL.
+          lwa_cl24D-ATFLB = 0.
+        ENDIF.
+        APPEND lwa_cl24D to lit_cl24D.
+      ENDLOOP.
+      SORT lit_cl24D BY OBJEK ELMNT.
+
+      select FRGGR
+             FRGSX
+             FRGC1
+             FRGC2
+             FRGC3
+             FRGC4
+             FRGC5
+             FRGC6
+             FRGC7
+             FRGC8
+      into table lit_T16FS
+      from T16FS
+      ORDER BY FRGGR FRGSX.
+
+*      select * from T16FC
+*      into table lit_T16FC.
+
+      select *
+      into table lit_T16FD
+      from T16FD
+      ORDER BY FRGGR FRGCO.
+
+      LOOP AT lit_T16FD into lwa_T16FD.
+        MOVE-CORRESPONDING lwa_T16FD to lit_t16DD.
+        REPLACE ALL OCCURRENCES OF '''' IN lit_t16DD-FRGCT WITH ''.
+        REPLACE ALL OCCURRENCES OF ',' IN lit_t16DD-FRGCT WITH ''.
+        REPLACE ALL OCCURRENCES OF '"' IN lwa_RSPTB_D-RSPDC WITH ''.
+        APPEND lit_t16DD.
+        CLEAR lit_t16DD.
+      ENDLOOP.
+
+
+      select a~FRGGR
+             a~FRGGT
+      into table lit_T16FH
+      from T16FH as a INNER JOIN T16FG as b
+        on a~FRGGR = b~FRGGR
+      where b~FRGOT = 1
+      ORDER BY a~FRGGR.
+
+      select a~FRGGR a~FRGSX a~FRGXT
+      INTO TABLE lit_t16fg
+      from T16FT as a INNER JOIN T16FG as b
+        on a~FRGGR = b~FRGGR
+      where b~FRGOT = 1
+      ORDER BY a~FRGGR a~FRGSX.
+
+      loop at lit_t16fg.
+        lit_t16fg-RLNAM = gd_rlnam.
+        modify lit_t16fg TRANSPORTING RLNAM.
+      endloop.
+      select * from T16FT
+      into table lit_T16FT.
+
+***-->> Elements Table - MOved Below to get elements from PFAC
+
+**-->> CL24N Table
+        REFRESH git_DataT. CLEAR git_DataT.
+        CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+        EXPORTING
+          i_field_seperator    = '|'
+        TABLES
+          i_tab_sap_data       = lit_cl24D
+        CHANGING
+          i_tab_converted_data = git_DataT
+        EXCEPTIONS
+          conversion_failed    = 1
+          OTHERS               = 2.
+        IF sy-subrc <> 0.
+          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+        ELSE.
+          CONCATENATE '04-' SY-SYSID SY-MANDT '-' 'CL24N' "gwa_RULTB-RLNAM
+          INTO ld_fname.
+
+          PERFORM flSave2File using ld_fname.
+        ENDIF.
+
+**-->> Rel Strat
+**-->> T16FC/lit_t16fg
+        REFRESH git_DataT. CLEAR git_DataT.
+        CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+        EXPORTING
+          i_field_seperator    = '|'
+        TABLES
+          i_tab_sap_data       = lit_t16fg "lit_T16FC
+        CHANGING
+          i_tab_converted_data = git_DataT
+        EXCEPTIONS
+          conversion_failed    = 1
+          OTHERS               = 2.
+        IF sy-subrc <> 0.
+          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+        ELSE.
+          CONCATENATE '07-' SY-SYSID SY-MANDT '-' 'T16FC' "gwa_RULTB-RLNAM
+          INTO ld_fname.
+
+          PERFORM flSave2File using ld_fname.
+        ENDIF.
+
+**-->> T16FS
+        REFRESH git_DataT. CLEAR git_DataT.
+        CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+        EXPORTING
+          i_field_seperator    = '|'
+        TABLES
+          i_tab_sap_data       = lit_T16FS
+        CHANGING
+          i_tab_converted_data = git_DataT
+        EXCEPTIONS
+          conversion_failed    = 1
+          OTHERS               = 2.
+        IF sy-subrc <> 0.
+          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+        ELSE.
+          CONCATENATE '08-' SY-SYSID SY-MANDT '-' 'T16FS' "gwa_RULTB-RLNAM
+          INTO ld_fname.
+
+          PERFORM flSave2File using ld_fname.
+        ENDIF.
+
+**-->> T16FD
+        REFRESH git_DataT. CLEAR git_DataT.
+        CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+        EXPORTING
+          i_field_seperator    = '|'
+        TABLES
+          i_tab_sap_data       = lit_T16DD
+        CHANGING
+          i_tab_converted_data = git_DataT
+        EXCEPTIONS
+          conversion_failed    = 1
+          OTHERS               = 2.
+        IF sy-subrc <> 0.
+          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+        ELSE.
+          CONCATENATE '10-' SY-SYSID SY-MANDT '-' 'T16FD' "gwa_RULTB-RLNAM
+          INTO ld_fname.
+
+          PERFORM flSave2File using ld_fname.
+        ENDIF.
+
+**-->> T16FH
+        REFRESH git_DataT. CLEAR git_DataT.
+        CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+        EXPORTING
+          i_field_seperator    = '|'
+        TABLES
+          i_tab_sap_data       = lit_T16FH
+        CHANGING
+          i_tab_converted_data = git_DataT
+        EXCEPTIONS
+          conversion_failed    = 1
+          OTHERS               = 2.
+        IF sy-subrc <> 0.
+          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+        ELSE.
+          ld_fname = 'T16FH'.
+          CONCATENATE '06-' SY-SYSID SY-MANDT '-' 'RGPTB' "gwa_RULTB-RLNAM
+          INTO ld_fname.
+          PERFORM flSave2File using ld_fname.
+        ENDIF.
+
+****-->> T16FT
+*        REFRESH git_DataT. CLEAR git_DataT.
+*        CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+*        EXPORTING
+*          i_field_seperator    = '|'
+*        TABLES
+*          i_tab_sap_data       = lit_T16FT
+*        CHANGING
+*          i_tab_converted_data = git_DataT
+*        EXCEPTIONS
+*          conversion_failed    = 1
+*          OTHERS               = 2.
+*        IF sy-subrc <> 0.
+*          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*          WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*        ELSE.
+*          CONCATENATE 'T16FT' '-PR' "gwa_RULTB-RLNAM
+*          INTO ld_fname.
+*
+*          PERFORM flSave2File using ld_fname.
+*        ENDIF.
+    ELSE.
+      gd_rlnam = 'MR'.
+      lwa_RULTD-RLDSC = 'MR Rules'.
+    ENDIF. "PR Specific
+
+**-->> Refresh Data for saving
+    REFRESH: git_RSPTB,git_PFACT.
+    CLEAR: git_RSPTB, git_PFACT.
+*    REFRESH: lit_pfacf,lit_RSPTB_D.
+*    CLEAR: lit_pfacf,lit_RSPTB_D.
+
+"lit_pfacf
+    SELECT a~OBJID b~MC_STEXT a~EXT_OBJID b~MC_SHORT a~REL_PRIOX
+    INTO TABLE git_RSPTB
+    FROM HRP1240 as a
+    INNER JOIN HRP1000 as b on a~OBJID = B~OBJID AND a~OTYPE = b~OTYPE
+    WHERE a~PLVAR = '01'
+      AND a~OTYPE = 'RY'
+      AND a~EXT_OTYPE = 'AC'
+      AND a~EXT_OBJID = gwa_RULTB-RLNAM
+      AND a~BEGDA <= SY-DATUM
+      AND a~ENDDA >= SY-DATUM
+      AND b~BEGDA <= SY-DATUM
+      AND b~ENDDA >= SY-DATUM.
+
+    SORT git_RSPTB.
+    DELETE ADJACENT DUPLICATES FROM git_RSPTB.
+
+    LOOP AT git_RSPTB INTO gwa_RSPTB.
+      SELECT OBJID ELEMENT EXPR_LOW EXPR_HIGH
+             TYPE  FLENG REFSTRUCT REFFIELD
+      APPENDING TABLE git_PFACT
+      FROM HRV1218
+      WHERE OTYPE = 'RY'
+        AND BEGDA <= SY-DATUM
+        AND ENDDA >= SY-DATUM
+        AND OBJID = gwa_RSPTB-RSPNM.
+
+      PERFORM fl_GetUser using gwa_rsptb-rspnm.
+      MOVE-CORRESPONDING gwa_RSPTB to lwa_RSPTB_D.
+      REPLACE ALL OCCURRENCES OF '''' IN lwa_RSPTB_D-RSPDC WITH ''.
+      REPLACE ALL OCCURRENCES OF ',' IN lwa_RSPTB_D-RSPDC WITH ''.
+      REPLACE ALL OCCURRENCES OF '"' IN lwa_RSPTB_D-RSPDC WITH ''.
+      lwa_RSPTB_D-rlnam = gd_rlnam.
+      APPEND lwa_RSPTB_D to lit_RSPTB_D.
+    ENDLOOP.
+    "Move Save Below For Conso
+
+    REFRESH git_DataT. CLEAR git_DataT.
+    IF NOT git_PFACT[] IS INITIAL.
+      DATA ld_ELMNT like gwa_PFACT-ELMNT.
+      SORT git_PFACT BY RSPNM ELMNT.
+      DELETE ADJACENT DUPLICATES FROM git_PFACT.
+      "lwa_pfacf TYPE gty_pfacf,
+      CLEAR ld_ELMNT.
+      LOOP AT git_PFACT into gwa_PFACT.
+        MOVE-CORRESPONDING gwa_PFACT TO lwa_pfacf.
+        IF gwa_PFACT-ELMNT <> ld_ELMNT.
+          lwa_pfacf-UNDEX = 1.
+          READ TABLE git_ELMTD INTO gwa_ELMTD WITH TABLE KEY ETYPE = 'PF'
+                                                             RLNAM = gd_rlnam
+                                                             ELMNT = gwa_PFACT-ELMNT.
+          IF SY-SUBRC <> 0. "New Element
+              gwa_ELMTD-ETYPE = 'PF'.
+              gwa_ELMTD-RLNAM = gd_rlnam.
+              gwa_ELMTD-ELMNT = gwa_PFACT-ELMNT.
+              gwa_ELMTD-DLTYP = gwa_PFACT-TYPE.
+              gwa_ELMTD-DSCRP = gwa_ELMTD-ELMNT.
+              gwa_ELMTD-ANZST = gwa_PFACT-FLENG.
+              gwa_ELMTD-REFTB = gwa_PFACT-REFSTRUCT.
+              gwa_ELMTD-REFLD = gwa_PFACT-REFFIELD.
+              APPEND gwa_ELMTD to git_ELMTD.
+          ENDIF.
+        ELSE.
+          lwa_pfacf-UNDEX = lwa_pfacf-UNDEX + 1.
+        ENDIF.
+        ld_ELMNT = gwa_PFACT-ELMNT.
+        "lwa_pfacf-RLNAM = gwa_RULTB-RLNAM.
+        lwa_pfacf-RLNAM = gd_rlnam.
+        APPEND lwa_pfacf to lit_pfacf.
+      ENDLOOP.
+      "Save MOved Below For Combined Data
+     ENDIF.
+     "MOVE-CORRESPONDING gwa_RULTB to lwa_RULTD.
+     lwa_RULTD-RLNMI = gd_rlnam.
+     "Description Defined Above
+     APPEND lwa_RULTD to lit_RULTD.
+  ENDLOOP.
+
+**-->> Elements Table
+  REFRESH git_DataT. CLEAR git_DataT.
+  CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+  EXPORTING
+    i_field_seperator    = '|'
+  TABLES
+    i_tab_sap_data       = git_ELMTD
+  CHANGING
+    i_tab_converted_data = git_DataT
+  EXCEPTIONS
+    conversion_failed    = 1
+    OTHERS               = 2.
+  IF sy-subrc <> 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+    WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+  ELSE.
+    CONCATENATE '02-' SY-SYSID SY-MANDT '-' 'ELMTB'
+    INTO ld_fname.
+    PERFORM flSave2File using ld_fname.
+  ENDIF.
+
+  IF NOT lit_pfacf[] IS INITIAL.
+      CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+      EXPORTING
+        i_field_seperator    = ';'
+      TABLES
+        i_tab_sap_data       = lit_pfacf "git_PFACT
+      CHANGING
+        i_tab_converted_data = git_DataT
+      EXCEPTIONS
+        conversion_failed    = 1
+        OTHERS               = 2.
+      IF sy-subrc <> 0.
+        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      ELSE.
+        CONCATENATE '03-' SY-SYSID SY-MANDT '-' 'PFACT'
+        INTO ld_fname.
+        PERFORM flSave2File using ld_fname.
+      ENDIF.
+  ENDIF.
+  "git_RSPTB
+  IF NOT lit_RSPTB_D[] IS INITIAL.
+      REFRESH git_DataT. CLEAR git_DataT.
+      CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+      EXPORTING
+        i_field_seperator    = '|'
+      TABLES
+        i_tab_sap_data       = lit_RSPTB_D "git_RSPTB
+      CHANGING
+        i_tab_converted_data = git_DataT
+      EXCEPTIONS
+        conversion_failed    = 1
+        OTHERS               = 2.
+      IF sy-subrc <> 0.
+        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      ELSE.
+        CONCATENATE '05-' SY-SYSID SY-MANDT '-' 'RSPTB'
+        INTO ld_fname.
+        PERFORM flSave2File using ld_fname.
+      ENDIF.
+  ENDIF.
+
+**-->> Rules Table
+    REFRESH git_DataT. CLEAR git_DataT.
+    CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+    EXPORTING
+      i_field_seperator    = '|'
+    TABLES
+      i_tab_sap_data       = lit_RULTD
+    CHANGING
+      i_tab_converted_data = git_DataT
+    EXCEPTIONS
+      conversion_failed    = 1
+      OTHERS               = 2.
+    IF sy-subrc <> 0.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    CONCATENATE '01-' SY-SYSID SY-MANDT '-' 'RULTB' "gwa_RULTB-RLNAM
+    INTO ld_fname.
+
+    PERFORM flSave2File using ld_fname.
+"git_USRSP
+**-->>User to Responsibility Table
+  REFRESH git_DataT. CLEAR git_DataT.
+  IF NOT git_USRSP[] IS INITIAL.
+    DATA ld_uname like gwa_USRSP-UNAME.
+    SORT git_USRSP BY UNAME RSPNM.
+    DELETE ADJACENT DUPLICATES FROM git_USRSP.
+    "lwa_pfacf TYPE gty_pfacf,
+    DATA ld_xeuid type i.
+    ld_xeuid = 999.
+    LOOP AT git_USRSP into gwa_USRSP.
+      MOVE-CORRESPONDING gwa_USRSP TO lwa_urtab.
+      IF gwa_USRSP-UNAME <> ld_uname.
+        lwa_urtab-UNDEX = 1.
+        ld_xeuid = ld_xeuid + 1.
+        lwa_xeusr-USRID = ld_xeuid.
+        lwa_xeusr-UNAME = gwa_USRSP-UNAME.
+        PERFORM fl_GetUsrDtls using lwa_xeusr-UNAME
+                           CHANGING lwa_xeusr-EMAIL
+                                    lwa_xeusr-FNAME
+                                    lwa_xeusr-LNAME.
+        APPEND lwa_xeusr to lit_xeusr.
+      ELSE.
+        lwa_urtab-UNDEX = lwa_urtab-UNDEX + 1.
+      ENDIF.
+      ld_uname = gwa_USRSP-UNAME.
+      lwa_urtab-begda = '01/01/2012'.
+      lwa_urtab-endda = '12/31/9999'.
+      APPEND lwa_urtab to lit_urtab.
+    ENDLOOP.
+*    CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+*    EXPORTING
+*      i_field_seperator    = ';'
+*    TABLES
+*      i_tab_sap_data       = lit_urtab "git_USRSP
+*    CHANGING
+*      i_tab_converted_data = git_DataT
+*    EXCEPTIONS
+*      conversion_failed    = 1
+*      OTHERS               = 2.
+*    IF sy-subrc <> 0.
+*      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*    ENDIF.
+*    CONCATENATE '09-' SY-SYSID SY-MANDT '-' 'USRSP'
+*    INTO ld_fname.
+*    PERFORM flSave2File using ld_fname.
+
+*git_OMRSP
+    SORT git_OMRSP.
+    DELETE ADJACENT DUPLICATES FROM git_OMRSP.
+    REFRESH git_DataT. CLEAR git_DataT.
+    CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+    EXPORTING
+      i_field_seperator    = ';'
+    TABLES
+      i_tab_sap_data       = git_OMRSP
+    CHANGING
+      i_tab_converted_data = git_DataT
+    EXCEPTIONS
+      conversion_failed    = 1
+      OTHERS               = 2.
+    IF sy-subrc <> 0.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    CONCATENATE '09-' SY-SYSID SY-MANDT '-' 'OMRSP'
+    INTO ld_fname.
+    PERFORM flSave2File using ld_fname.
+
+**-->> User Info
+    REFRESH git_DataT. CLEAR git_DataT.
+    CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+    EXPORTING
+      i_field_seperator    = ';'
+    TABLES
+      i_tab_sap_data       = lit_xeusr
+    CHANGING
+      i_tab_converted_data = git_DataT
+    EXCEPTIONS
+      conversion_failed    = 1
+      OTHERS               = 2.
+    IF sy-subrc <> 0.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    CONCATENATE '11-' SY-SYSID SY-MANDT '-' 'XEUSR'
+    INTO ld_fname.
+    PERFORM flSave2File using ld_fname.
+
+**-->> OM
+*    REFRESH git_DataT. CLEAR git_DataT.
+*    CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+*    EXPORTING
+*      i_field_seperator    = ';'
+*    TABLES
+*      i_tab_sap_data       = git_OMTBL
+*    CHANGING
+*      i_tab_converted_data = git_DataT
+*    EXCEPTIONS
+*      conversion_failed    = 1
+*      OTHERS               = 2.
+*    IF sy-subrc <> 0.
+*      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*    ENDIF.
+*    CONCATENATE '12-' SY-SYSID SY-MANDT '-' 'OMTBL'
+*    INTO ld_fname.
+*    PERFORM flSave2File using ld_fname.
+*
+*    REFRESH git_DataT. CLEAR git_DataT.
+*    CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+*    EXPORTING
+*      i_field_seperator    = ';'
+*    TABLES
+*      i_tab_sap_data       = git_OMRSP
+*    CHANGING
+*      i_tab_converted_data = git_DataT
+*    EXCEPTIONS
+*      conversion_failed    = 1
+*      OTHERS               = 2.
+*    IF sy-subrc <> 0.
+*      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*    ENDIF.
+*    CONCATENATE '12-' SY-SYSID SY-MANDT '-' 'OMRSP'
+*    INTO ld_fname.
+*    PERFORM flSave2File using ld_fname.
+
+    SORT gr_objid.
+    DELETE ADJACENT DUPLICATES FROM gr_objid.
+    IF NOT gr_objid[] IS INITIAL.
+      SELECT *
+      INTO TABLE lit_H1000
+      FROM HRP1000
+      WHERE OTYPE EQ 'S '
+        AND OBJID IN gr_objid
+        AND PLVAR = '01'
+        AND ENDDA GE sy-datum
+        AND LANGU EQ sy-langu.
+
+      SELECT h~OBJID
+             h~STEXT
+*             d~SOBID
+**             MC_SHORT
+**             MC_STEXT
+**             MC_SEARK
+      INTO TABLE git_OMT00
+      FROM HRP1000 as h
+*        INNER JOIN HRP1001 as d
+*        on h~OTYPE = d~OTYPE
+*       and h~OBJID = d~OBJID
+*       and h~PLVAR = d~PLVAR
+      WHERE h~OTYPE EQ 'S '
+        AND h~OBJID IN gr_objid
+        AND h~PLVAR = '01'
+        AND h~ENDDA GE sy-datum
+*        AND d~RSIGN EQ 'A'
+*        AND d~SCLAS NE 'US'
+        AND h~LANGU EQ sy-langu.
+
+*HRP1001-SOBID
+
+      SELECT *
+      INTO TABLE lit_H1001
+      FROM HRP1001
+      WHERE OTYPE EQ 'S '
+        AND OBJID IN gr_objid
+        AND PLVAR = '01'
+        AND ENDDA GE sy-datum.
+
+      SORT lit_H1000 BY OBJID ENDDA.
+      SORT lit_H1001 BY OBJID ENDDA.
+
+      SORT git_OMT01.
+      DELETE ADJACENT DUPLICATES FROM git_OMT01 COMPARING ALL FIELDS.
+      REFRESH git_DataT. CLEAR git_DataT.
+      CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+      EXPORTING
+        i_field_seperator    = ';'
+      TABLES
+        i_tab_sap_data       = git_OMT00
+      CHANGING
+        i_tab_converted_data = git_DataT
+      EXCEPTIONS
+        conversion_failed    = 1
+        OTHERS               = 2.
+      IF sy-subrc <> 0.
+        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      ENDIF.
+      CONCATENATE '13-' SY-SYSID SY-MANDT '-' 'OMT00'
+      INTO ld_fname.
+      PERFORM flSave2File using ld_fname.
+      REFRESH git_DataT. CLEAR git_DataT.
+      CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+      EXPORTING
+        i_field_seperator    = ';'
+      TABLES
+        i_tab_sap_data       = git_OMT01
+      CHANGING
+        i_tab_converted_data = git_DataT
+      EXCEPTIONS
+        conversion_failed    = 1
+        OTHERS               = 2.
+      IF sy-subrc <> 0.
+        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      ENDIF.
+      CONCATENATE '14-' SY-SYSID SY-MANDT '-' 'OMT01'
+      INTO ld_fname.
+      PERFORM flSave2File using ld_fname.
+
+      REFRESH git_DataT. CLEAR git_DataT.
+
+*      DATA: ld_wsfnam TYPE STRING. " like RLGRAP-FILENAME.
+
+*      CONCATENATE up_dpath '13-' SY-SYSID SY-MANDT '-' 'H1000' '.DBF'
+*      INTO ld_wsfnam. "ld_fname.
+*
+*          call function 'GUI_DOWNLOAD'
+*           exporting
+*             filename                       = ld_wsfnam
+*             filetype                       = 'DBF'
+*            tables
+*              data_tab                      = lit_H1000
+*           exceptions
+*             file_open_error               = 1
+*             file_write_error              = 2
+*             invalid_filesize              = 3
+*             invalid_type                  = 4
+*             no_batch                      = 5
+*             unknown_error                 = 6
+*             invalid_table_width           = 7
+*             gui_refuse_filetransfer       = 8
+*             customer_error                = 9
+*             others                        = 10.
+
+*      CONCATENATE up_dpath '14-' SY-SYSID SY-MANDT '-' 'H1001' '.DBF'
+*      INTO ld_wsfnam. "ld_fname.
+*
+*          call function 'GUI_DOWNLOAD'
+*           exporting
+*             filename                       = ld_wsfnam "ld_fname
+*             filetype                       = 'DBF'
+*            tables
+*              data_tab                      = lit_H1001
+*           exceptions
+*             file_open_error               = 1
+*             file_write_error              = 2
+*             invalid_filesize              = 3
+*             invalid_type                  = 4
+*             no_batch                      = 5
+*             unknown_error                 = 6
+*             invalid_table_width           = 7
+*             gui_refuse_filetransfer       = 8
+*             customer_error                = 9
+*             others                        = 10.
+
+*      CONCATENATE up_dpath '14-' SY-SYSID SY-MANDT '-' 'H1001' '.WK1'
+*      INTO ld_wsfnam. "ld_fname.
+*
+*          call function 'GUI_DOWNLOAD'
+*           exporting
+*             filename                       = ld_wsfnam "ld_fname
+*             filetype                       = 'WK1'
+*            tables
+*              data_tab                      = lit_H1001
+*           exceptions
+*             file_open_error               = 1
+*             file_write_error              = 2
+*             invalid_filesize              = 3
+*             invalid_type                  = 4
+*             no_batch                      = 5
+*             unknown_error                 = 6
+*             invalid_table_width           = 7
+*             gui_refuse_filetransfer       = 8
+*             customer_error                = 9
+*             others                        = 10.
+**
+**
+**      CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+**      EXPORTING
+**        i_field_seperator    = ';'
+**      TABLES
+**        i_tab_sap_data       = git_OMTBL
+**      CHANGING
+**        i_tab_converted_data = lit_H1001
+**      EXCEPTIONS
+**        conversion_failed    = 1
+**        OTHERS               = 2.
+**      IF sy-subrc <> 0.
+**        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+**        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+**      ENDIF.
+**      CONCATENATE '14-' SY-SYSID SY-MANDT '-' 'H1001'
+**      INTO ld_fname.
+**      PERFORM flSave2File using ld_fname.
+*
+**      REFRESH git_DataT. CLEAR git_DataT.
+**      CALL FUNCTION 'SAP_CONVERT_TO_CSV_FORMAT'
+**      EXPORTING
+**        i_field_seperator    = ';'
+**      TABLES
+**        i_tab_sap_data       = git_OMTBL
+**      CHANGING
+**        i_tab_converted_data = lit_H1000
+**      EXCEPTIONS
+**        conversion_failed    = 1
+**        OTHERS               = 2.
+**      IF sy-subrc <> 0.
+**        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+**        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+**      ENDIF.
+**      CONCATENATE '13-' SY-SYSID SY-MANDT '-' 'H1000'
+**      INTO ld_fname.
+**      PERFORM flSave2File using ld_fname.
+
+    ENDIF.
+
+   ENDIF.
+
+
+
+
+endform.       "f_get_data
+
+*&---------------------------------------------------------------------*
+*&      Form  FL_GETUSER
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_GWA_RSPTB_RSPNM  text
+*----------------------------------------------------------------------*
+form FL_GETUSER  using pi_rspnm.
+  data : begin of lit_acval occurs 0.
+           include structure objec.
+  data : end of lit_acval.
+
+  gwa_USRSP-RSPNM = pi_rspnm.
+  refresh lit_acval.
+  CLEAR lit_acval.
+  call function 'RH_STRUC_GET'
+       exporting
+         act_otype       = 'RY'
+         act_objid       = pi_rspnm
+         act_wegid       = 'SAP_TAGT'
+         act_plvar       = '01'
+         authority_check = ' '
+       tables
+         result_objec    = lit_acval
+       exceptions
+         no_plvar_found  = 1
+         no_entry_found  = 2
+         others          = 3.
+  if sy-subrc = 0.
+    data: ld_flagx type flag,ld_flagy.
+    clear: ld_flagx, ld_flagy.
+     gr_objid-sign = 'I'.
+     gr_objid-option = 'EQ'.
+     loop at lit_acval.
+        IF lit_acval-otype = 'US'.
+          gwa_USRSP-UNAME = lit_acval-realo.
+          APPEND gwa_USRSP TO git_USRSP.
+
+          gwa_OMT01-UNAME = lit_acval-realo.
+          IF lit_acval-BEGDA IS INITIAL.
+            gwa_OMT01-BEGDA = '19000101'.
+          ELSE.
+            gwa_OMT01-BEGDA = lit_acval-BEGDA.
+          ENDIF.
+          IF lit_acval-ENDDA IS INITIAL.
+            gwa_OMT01-ENDDA = '19000101'.
+          ELSE.
+            gwa_OMT01-ENDDA = lit_acval-ENDDA.
+          ENDIF.
+          ld_flagy = 'X'.
+        endif.
+        IF lit_acval-otype = 'S '.
+          gr_objid-low = lit_acval-realo.
+          append gr_objid.
+          gwa_OMRSP-RLNAM = gd_rlnam.
+          gwa_OMRSP-OMNAM = lit_acval-realo.
+          gwa_OMRSP-RSPNM = pi_rspnm.
+          APPEND gwa_OMRSP TO git_OMRSP.
+          gwa_OMT01-OMNAM = lit_acval-realo.
+          ld_flagx = 'X'.
+        ENDIF.
+        MOVE-CORRESPONDING lit_acval to git_OMTBL.
+        git_OMTBL-rspnm = pi_rspnm.
+        append git_OMTBL.
+     endloop.   "it_result
+     if ld_flagx = 'X' AND ld_flagy = 'X'.
+       APPEND gwa_OMT01 TO git_OMT01.
+     endif.
+  endif.
+"Tables: HRP1001 - Relationships
+"        HRP1000 - Desctiption Tables
+endform.                    " FL_GETUSER
+
+*&---------------------------------------------------------------------*
+*&      Form  FLSAVE2FILE
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_1464   text
+*----------------------------------------------------------------------*
+form FLSAVE2FILE  using pi_fname.
+  DATA: ld_fname like RLGRAP-FILENAME.
+  data ld_flder(100).
+  ld_flder = 'D:\Docs\ABS\MRNet\Data\'.
+  ld_flder = gd_DIRNM.
+  ld_flder = up_dpath.
+
+  CONCATENATE ld_flder pi_fname '.DSV'
+  INTO ld_fname.
+    call function 'WS_DOWNLOAD'
+     exporting
+       filename                       = ld_fname
+       filetype                       = 'ASC'
+      tables
+        data_tab                      = git_DataT
+     exceptions
+       file_open_error               = 1
+       file_write_error              = 2
+       invalid_filesize              = 3
+       invalid_type                  = 4
+       no_batch                      = 5
+       unknown_error                 = 6
+       invalid_table_width           = 7
+       gui_refuse_filetransfer       = 8
+       customer_error                = 9
+       others                        = 10.
+
+
+endform.                    " FLSAVE2FILE
+
+FORM fl_GetUsrDtls USING pi_uname
+                CHANGING po_email
+                         po_fname
+                         po_lname.
+*                         up_badat.
+
+  DATA:
+    ld_persnumber LIKE usr21-persnumber,
+    ld_addrnumber LIKE usr21-addrnumber.
+
+  SELECT SINGLE name_last name_first
+    INTO (po_lname, po_fname)
+  FROM user_addr
+  WHERE bname EQ pi_uname.                          "Username
+
+  if po_fname IS INITIAL.
+    po_fname = pi_uname.
+  endif.
+  if po_lname IS INITIAL.
+    po_lname = pi_uname.
+  endif.
+  CONDENSE: po_lname, po_fname.
+
+* INDEX - PK(BNAME)
+  SELECT SINGLE persnumber addrnumber
+    INTO (ld_persnumber, ld_addrnumber)
+    FROM usr21
+    WHERE
+      bname EQ pi_uname.
+
+  IF sy-subrc EQ 0.
+*   INDEX - PK(ADDRNUMBER, PERSNUMBER)
+    SELECT SINGLE smtp_addr
+      INTO po_email
+      FROM adr6
+      WHERE addrnumber EQ ld_addrnumber
+        AND persnumber EQ ld_persnumber.
+*        AND date_from LE p_badat.
+
+  ENDIF.
+  if po_email IS INITIAL.
+    CONCATENATE pi_uname '@abs-cbn.com'
+    into po_email.
+  endif.
+  CONDENSE: po_email.
+
+ENDFORM.                    " fl_GtUsrEmail

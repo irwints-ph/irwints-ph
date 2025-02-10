@@ -1,0 +1,60 @@
+setenv DB_SID orcl
+
+$ORACLE_HOME/bin/lsnrctl start
+$ORACLE_HOME/bin/dbstart $ORACLE_HOME
+
+#Start the database:
+$ORACLE_HOME/bin/dbstart $ORACLE_HOME
+
+#Alternate start DB
+sqlplus / as sysdba;
+SQL> startup
+
+
+#Stop the database:
+$ORACLE_HOME/bin/dbshut $ORACLE_HOME
+
+#Start the Database Control Enterprise Manager that provides a web interface for database control:
+emctl start dbconsole
+
+#Stop the Database Control Manager:
+emctl stop dbconsole
+
+#Check the Database Control Manager Status:
+emctl status dbconsole
+
+#Start the listener:
+$ORACLE_HOME/bin/lsnrctl start
+
+#Stop the listener:
+$ORACLE_HOME/bin/lsnrctl stop
+
+#Check the status of the listener:
+$ORACLE_HOME/bin/lsnrctl status
+
+#Start the Database Configuration Assistant (in the GUI shell, not in the SSH cosole):
+dbca
+
+#The Oracle listener can be configured by editing the file:
+vim $ORACLE_HOME/network/admin/listener.ora
+
+#Connecting to the database in the console:
+
+sqlplus / as sysdba;
+sudo /home/oracle/app/oraInventory/orainstRoot.sh
+ — /u01/app/oracle/product/12.2.0/dbhome_1/root.sh
+
+--------------------------------------------------
+ps -ef | grep smon
+ps -ef | grep ora
+
+#check listener nae ?
+ps -ef | grep tns
+lsnrctl status <LISTENER-NAME>
+srvctl status listener -l <LISTENER-NAME>
+
+#Check connection if dedicated or shared - connect as sysdba
+SELECT sid, server from v$session
+
+ps -ef | grep oracle<servicename>
+ps -ef | grep oracleORCL105

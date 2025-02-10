@@ -1,0 +1,10 @@
+md D:\Oracle\DB\oradata\tutorialDb
+sqlplus sys/A3tep0gA as sysdba
+CREATE TABLESPACE TUTORIALDB DATAFILE 'D:\Oracle\DB\oradata\tutorialDb\tutorialDb.ORA' SIZE 10M REUSE 
+    AUTOEXTEND 
+    ON NEXT  5M  EXTENT MANAGEMENT LOCAL 
+    SEGMENT SPACE MANAGEMENT  AUTO;
+
+create user tutorialdb identified by tutorialDb DEFAULT TABLESPACE "TUTORIALDB";
+grant connect to tutorialdb;
+grant all privileges to tutorialdb;
