@@ -2,12 +2,13 @@
 @SET MYSQL=c:\xampp\mysql\bin\mysql --local_infile=1 -u root -p1 -h 192.168.100.105
 @SET MYSQL=mysql --local_infile=1 -u root -p5475 -P3307
 @SET MYSQL=mysql --local_infile=1 -u root -p1 -h 192.168.100.105
+@SET MYSQL=mysql --local_infile=1 -u root -p1
 @SET DBNAM=ApproverDB
-
-@ECHO Creating DB %DBNAM%
-@%MYSQL% -e "DROP DATABASE IF EXISTS %DBNAM%;"
-@%MYSQL% -e "CREATE DATABASE %DBNAM%;"
-@REM GOTO :END
+@REM 02.19.2025 - Just insert in existing DB
+@REM @ECHO Creating DB %DBNAM%
+@REM @%MYSQL% -e "DROP DATABASE IF EXISTS %DBNAM%;"
+@REM @%MYSQL% -e "CREATE DATABASE %DBNAM%;"
+@REM @REM GOTO :END
 @%MYSQL% %DBNAM% < 00-ApproverDB.sql
 
 @ECHO 01 Inserting apps_wf_rultb data...
