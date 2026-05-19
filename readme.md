@@ -1,19 +1,55 @@
+# Hi, I'm Erwin 👋
 
-## Clone
-```
-git clone --branch db-scripts https://github.com/irwints-ph/irwints-ph.git db-scripts
-cd db-scripts
-```
+Full Stack Developer focused on backend systems, APIs, and modern web applications.
 
-## github initial create
-```
-git init
-git remote add origin https://github.com/irwints-ph/irwints-ph.git
-git checkout -b db-scripts
-git add .
-git config user.email "irwints@yahoo.com"
-git config user.name "Erwin Santos"
+## 🚀 Tech Stack
 
-git commit -m "Initial Commit"
-git push origin db-scripts
-```
+### Frontend
+- React
+- TypeScript
+- Vite
+- HTML/CSS
+
+### Backend
+- C# (.NET Core)
+- Python (FastAPI)
+- Node.js / Express
+
+### Database & ORM
+- PostgreSQL
+- MySQL
+- SQL Server
+- SQLAlchemy
+- Sequelize
+- Entity Framework
+
+### Cloud & DevOps
+- AWS
+- Azure
+- Docker
+- CI/CD
+
+---
+
+## 💡 Current Focus
+
+- FastAPI backend systems
+- React + TypeScript applications
+- API architecture
+- Clean architecture & reusable boilerplates
+- Cloud-native deployments
+
+---
+
+## 🔗 Portfolio
+
+[Portfolio Website](https://d38xjohrnw6fl1.cloudfront.net/)
+
+---
+
+## 📫 Contact
+- Email: irwints@yahoo.com, irwints@gmail.com
+- LinkedIn: https://linkedin.com/in/your-profile
+- GitHub: https://github.com/irwints-ph
+- Viber/WhatsUp: +63 927 6614087
+- SMS/Call: +63 998 9632573
