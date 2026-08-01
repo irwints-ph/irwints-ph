@@ -1,12 +1,12 @@
 # Hi, I'm Erwin 👋
 
+Enterprise Engineer • Solution Architect • Systems Thinker
+
 **Builder First. Architect by Experience.**
 
-Enterprise Engineer • Systems Thinker • Solution Architect • Engineering Knowledge Advocate
+I enjoy understanding complex systems, modernizing enterprise platforms, and designing engineering solutions that remain understandable, maintainable, and adaptable long after their original implementation.
 
-I enjoy understanding complex systems, modernizing enterprise platforms, and designing engineering solutions that remain maintainable long after the original implementation.
-
-Over the past 20+ years I've worked across enterprise systems, ERP platforms, backend engineering, cloud modernization, integration, and architecture. More recently, I've been exploring how Humans and AI can collaborate to preserve engineering understanding through the **Assisted Flow of Knowledge (AFK)** methodology.
+Over the past 20+ years I've worked across enterprise systems, ERP platforms, backend engineering, cloud modernization, integration, and architecture. More recently, I've been researching how Humans and AI can collaboratively preserve, reconstruct, and continuously improve engineering understanding through the **Assisted Flow of Knowledge (AFK)** methodology.
 
 > I believe technology changes.
 >
@@ -71,6 +71,12 @@ Over the past 20+ years I've worked across enterprise systems, ERP platforms, ba
 
 ---
 
+# 🎯 Mission
+
+I believe preserving Engineering State is a gift to our future selves.
+
+Everything I build today should help someone—Human or AI—understand, continue, and improve it tomorrow.
+
 # 🌱 Current Focus
 
 Currently exploring and validating:
@@ -88,15 +94,15 @@ Currently exploring and validating:
 
 ### 🌊 AFK — Assisted Flow of Knowledge
 
-A research initiative exploring how Humans and AI can collaboratively discover, preserve, reconstruct, and continuously improve engineering understanding.
+A research initiative exploring how Humans and AI collaborate to preserve engineering understanding and reconstruct engineering state across sessions.
 
 ### 📄 EDS — Engineering Documentation System
 
-A reusable documentation framework for software engineering projects.
+A reusable documentation framework designed for both human engineers and AI collaborators.
 
 ### 📚 EKS — Engineering Knowledge System
 
-A knowledge repository focused on preserving engineering understanding rather than simply documenting code.
+A system for organizing engineering knowledge as connected evidence rather than isolated documentation.
 
 ---
 
@@ -112,30 +118,33 @@ Evidence validates capability.
 
 Capability creates opportunity.
 
+Understanding creates lasting engineering.
+
 ---
 
 # 🔗 Portfolio
 
-Portfolio Website
-
-https://d38xjohrnw6fl1.cloudfront.net/
 
 ---
 
 # 📫 Contact
 
-Email
-
-- irwints@yahoo.com
-- irwints@gmail.com
-
 GitHub
 
 - https://github.com/irwints-ph
 
+Portfolio Website
+
+https://d38xjohrnw6fl1.cloudfront.net/
+
 LinkedIn
 
 - (Updating)
+
+Email
+
+- irwints@yahoo.com
+- irwints@gmail.com
 
 Viber / WhatsApp
 
